@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "pillar",
+  "version": "0.0.0",
+  "scripts": {
+    "setup": "husky install",
+    "dev": "doer dev",
+    "build": "doer build"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,json}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "fastdom": "^1.0.11"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.16.7",
+    "@babel/runtime-corejs3": "^7.16.7",
+    "@doerjs/cli": "0.0.5-alpha.6",
+    "@doerjs/eslint-config": "0.0.5-alpha.6",
+    "@doerjs/prettier-config": "0.0.5-alpha.6",
+    "@doerjs/plugin-less": "0.0.5-alpha.6",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.5"
+  }
+}

@@ -1,0 +1,48 @@
+.pila-layout {
+  display: flex;
+  flex-direction: column;
+
+  > .pila-layout_container {
+    display: flex;
+    flex-direction: column;
+
+    > .pila-layout_content {
+      display: flex;
+      flex-direction: row;
+
+      > .pila-layout_main {
+        flex: 1 1 auto;
+      }
+    }
+  }
+}
+
+.pila-layout.pila-layout--fixed-auto {
+  height: 100%;
+
+  > .pila-layout_container {
+    height: 100%;
+
+    > .pila-layout_content {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+}
+
+.pila-layout.pila-layout--fixed-fixed {
+  height: 100%;
+
+  > .pila-layout_container {
+    height: 100%;
+
+    > .pila-layout_content {
+      flex: 1 1 auto;
+      height: 0;
+
+      > .pila-layout_main {
+        overflow: auto;
+      }
+    }
+  }
+}
