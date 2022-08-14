@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { getAriaProps } from '@/packages/utils'
+import { getAriaProps } from '@/utils/element'
 
 import './Section.less'
 
@@ -19,4 +19,4 @@ export default function Section(props) {
     </section>
   )
 }
-Section.$$type = 'Side'
+Section.$$type = 'Section'

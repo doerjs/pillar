@@ -1,31 +1,43 @@
 .size(@i) when (@i <= 24) {
-  &.pila-col-@{i} {
-    flex-basis: (@i / 24) * 100%;
-    max-width: (@i / 24) * 100%;
+  .pila-col {
+    &-@{i} {
+      flex-basis: (@i / 24) * 100%;
+      max-width: (@i / 24) * 100%;
+    }
   }
+
   .size((@i + 1));
 }
 
 .response-size(@i; @specName) when (@i <= 24) {
-  &.pila-col-@{i}--@{specName} {
-    flex-basis: (@i / 24) * 100%;
-    max-width: (@i / 24) * 100%;
+  .pila-col {
+    &-@{i}--@{specName} {
+      flex-basis: (@i / 24) * 100%;
+      max-width: (@i / 24) * 100%;
+    }
   }
-  .response-size((@i + 1); @specName);
+
+  .response-size((@i + 1), @specName);
 }
 
 .offset-size(@i) when (@i <= 24) {
-  &.pila-col-@{i}_offset {
-    margin-left: (@i / 24) * 100%;
+  .pila-col {
+    &-@{i}_offset {
+      margin-left: (@i / 24) * 100%;
+    }
   }
+
   .offset-size((@i + 1));
 }
 
 .response-offset-size(@i; @specName) when (@i <= 24) {
-  &.pila-col-@{i}_offset--@{specName} {
-    margin-left: (@i / 24) * 100%;
+  .pila-col {
+    &-@{i}_offset--@{specName} {
+      margin-left: (@i / 24) * 100%;
+    }
   }
-  .response-offset-size((@i + 1); @specName)
+
+  .response-offset-size((@i + 1), @specName);
 }
 
 .pila-col {
@@ -33,48 +45,37 @@
   box-sizing: border-box;
   padding-left: 8px;
   padding-right: 8px;
-  .size(0);
-  .offset-size(0);
 }
 
+.size(0);
+.offset-size(0);
+
 @media (max-width: 1024px) {
-  .pila-col {
-    .response-size(0; xs);
-    .response-offset-size(0; xs);
-  }
+  .response-size(0, xs);
+  .response-offset-size(0, xs);
 }
 
 @media (min-width: 1024px) and (max-width: 1280px) {
-  .pila-col {
-    .response-size(0; sm);
-    .response-offset-size(0; sm);
-  }
+  .response-size(0, sm);
+  .response-offset-size(0, sm);
 }
 
 @media (min-width: 1280px) and (max-width: 1600px) {
-  .pila-col {
-    .response-size(0; md);
-    .response-offset-size(0; md);
-  }
+  .response-size(0, md);
+  .response-offset-size(0, md);
 }
 
 @media (min-width: 1600px) and (max-width: 1920px) {
-  .pila-col {
-    .response-size(0; lg);
-    .response-offset-size(0; lg);
-  }
+  .response-size(0, lg);
+  .response-offset-size(0, lg);
 }
 
 @media (min-width: 1920px) and (max-width: 2560px) {
-  .pila-col {
-    .response-size(0; xl);
-    .response-offset-size(0; xl);
-  }
+  .response-size(0, xl);
+  .response-offset-size(0, xl);
 }
 
 @media (min-width: 2560px) {
-  .pila-col {
-    .response-size(0; xxl);
-    .response-offset-size(0; xxl);
-  }
+  .response-size(0, xxl);
+  .response-offset-size(0, xxl);
 }

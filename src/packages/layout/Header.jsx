@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { matchElement } from '@/packages/utils'
+import { matchElement } from '@/utils/element'
 
 import './Header.less'
 

@@ -42,30 +42,45 @@ function isElement(element, type) {
  */
 export function matchElement(children, matches = []) {
   const otherNodes = []
-  const matchedNodes = Children.toArray(children).reduce((result, element) => {
+  const otherNodesOption = { startElementIndex: -1, endElementIndex: -1 }
+
+  function setOtherNodesIndex(index) {
+    if (otherNodesOption.startElementIndex === -1) {
+      otherNodesOption.startElementIndex = index
+      otherNodesOption.endElementIndex = index
+    } else {
+      otherNodesOption.endElementIndex = index
+    }
+  }
+
+  const matchedNodes = Children.toArray(children).reduce((result, element, index) => {
     if (!element) {
       return result
     }
 
-    const index = matches.findIndex((type) => {
+    const currIndex = matches.findIndex((type) => {
       return isElement(element, type)
     })
 
-    if (index < 0) {
+    if (currIndex < 0) {
+      setOtherNodesIndex(index)
       otherNodes.push(element)
       return result
     }
 
-    if (!result[index]) {
-      result[index] = []
+    if (!result[currIndex]) {
+      result[currIndex] = []
     }
 
-    result[index].push(element)
+    // 标记定义在未匹配节点前还是后
+    element.type.$$elementIndex = index
+    result[currIndex].push(element)
 
     return result
   }, [])
 
   matchedNodes[matches.length] = otherNodes
+  matchedNodes[matches.length + 1] = otherNodesOption
 
   return matchedNodes
 }

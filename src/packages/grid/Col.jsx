@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { isNumber, isObject } from '@/packages/utils'
+import { isNumber, isObject } from '@/utils/is'
 
 import './Col.less'
 
@@ -31,7 +31,7 @@ function formatSpec(spec) {
  * @property {Number | Object<span, offset>} xxl >2560
  * @property {ReactNode | ReactNode[]} children
  */
-export default function Col({ id, className, gutterXY, span = 6, offset = 0, xs, sm, md, lg, xl, xxl, children }) {
+export default function Col({ id, className, gutterX, span = 6, offset = 0, xs, sm, md, lg, xl, xxl, children }) {
   const colClassName = {}
   if (className) {
     colClassName[className] = true
@@ -87,8 +87,8 @@ export default function Col({ id, className, gutterXY, span = 6, offset = 0, xs,
   function style() {
     const styleSheet = {}
 
-    styleSheet.paddingLeft = `${gutterXY.x / 2}px`
-    styleSheet.paddingRight = `${gutterXY.x / 2}px`
+    styleSheet.paddingLeft = `${gutterX / 2}px`
+    styleSheet.paddingRight = `${gutterX / 2}px`
 
     return styleSheet
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { matchElement } from '@/packages/utils'
+import { matchElement } from '@/utils/element'
 
 import './Layout.less'
 
@@ -13,16 +13,34 @@ import './Layout.less'
  * @property {ReactNode | ReactNode[]} children
  */
 export default function Layout({ id, className, mode, children }) {
-  const [header = [], footer = [], side = [], other] = matchElement(children, ['Header', 'Footer', 'Side'])
+  const [header = [], footer = [], side = [], section = [], main, mainOption] = matchElement(children, [
+    'Header',
+    'Footer',
+    'Side',
+    'Section',
+  ])
 
   function renderContent() {
-    const leftElement = side[0]
-    const rightElement = side[1]
+    let leftElement
+    let rightElement
+
+    const sideElement = side[0]
+    const sectionElement = section[0]
+    if (sideElement && sectionElement) {
+      leftElement = sideElement.type.$$elementIndex > sectionElement.type.$$elementIndex ? sectionElement : sideElement
+      rightElement = sideElement.type.$$elementIndex > sectionElement.type.$$elementIndex ? sideElement : sectionElement
+    } else if (sideElement) {
+      leftElement = sideElement.type.$$elementIndex < mainOption.startElementIndex ? sideElement : null
+      rightElement = sideElement.type.$$elementIndex > mainOption.startElementIndex ? sideElement : null
+    } else if (sectionElement) {
+      leftElement = sectionElement.type.$$elementIndex < mainOption.startElementIndex ? sectionElement : null
+      rightElement = sectionElement.type.$$elementIndex > mainOption.startElementIndex ? sectionElement : null
+    }
 
     return (
       <div className="pila-layout_content">
         {leftElement && <div className="pila-layout_left">{leftElement}</div>}
-        <main className="pila-layout_main">{other}</main>
+        <main className="pila-layout_main">{main}</main>
         {rightElement && <div className="pila-layout_right">{rightElement}</div>}
       </div>
     )

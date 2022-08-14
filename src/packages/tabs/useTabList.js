@@ -1,116 +1,116 @@
-import { useState, useEffect, Children } from 'react'
-import {
-  getElementProps,
-  keyboardFactory,
-  keyLeft,
-  keyRight,
-  keyUp,
-  keyDown,
-  keyEnter,
-  keySpace,
-  isMatchElement,
-  isUndefined,
-  isFunction,
-  RawListElementFactory,
-  nextTick,
-} from '@/packages/utils'
-
-const rawListElement = new RawListElementFactory('tab')
+import { useState, useRef, useEffect, useCallback, Children } from 'react'
+import { isUndefined, isFunction } from '@/utils/is'
+import { nextTick } from '@/utils/nextTick'
+import { getElementProps, isMatchElement } from '@/utils/element'
+import { RawListElementFactory } from '@/utils/rawListElement'
+import { keyLeft, keyRight, keyUp, keyDown, keyEnter, keySpace, keyboardFactory } from '@/utils/keyboard'
 
 function getTab(element) {
-  const { value, ...props } = element.props
-
-  props.value = isUndefined(value) ? element.key : value
   return {
+    ...element.props,
     key: element.key,
-    isDisabled: !!props.disabled,
-    props,
+    value: isUndefined(element.props.value) ? element.key : element.props.value,
   }
 }
 
-function getTabList(props) {
-  return Children.toArray(props.children).reduce((tabs, element) => {
+// 获取tabs的默认值
+function getDefaultValue(props, tabs) {
+  let defaultValue = props.defaultValue
+  if (isUndefined(props.defaultValue) && tabs.length) {
+    const firstAvailableTab = tabs.find((tab) => !tab.disabled) || tabs[0] || {}
+    defaultValue = firstAvailableTab.value
+  }
+  return defaultValue
+}
+
+// 获取tabs可聚焦的第一个元素
+function getDefaultFocusableValue(tabs) {
+  const firstFocusableTab = tabs.find((tab) => {
+    return !tab.disabled
+  })
+  return firstFocusableTab ? firstFocusableTab.value : undefined
+}
+
+function getTabs(props) {
+  const tabs = Children.toArray(props.children).reduce((result, element) => {
     if (!isMatchElement(element, 'TabPanel')) {
-      return tabs
+      return result
     }
 
     const tab = getTab(element)
-    tabs.push(tab)
+    result.push(tab)
 
-    return tabs
+    return result
   }, [])
-}
 
-function getDefaultValue(tabs, props) {
-  if (!isUndefined(props.defaultValue)) {
-    return props.defaultValue
-  }
+  const defaultValue = getDefaultValue(props, tabs)
+  const defaultFocusableValue = getDefaultFocusableValue(tabs)
 
-  if (!Array.isArray(tabs) || !tabs.length) {
-    return
-  }
-
-  const tab = tabs.find((tab) => !tab.props.disabled) || tabs[0]
-  return tab.props.value
-}
-
-// 是否受控模式
-function isControlled(props) {
-  return !isUndefined(props.value)
-}
-
-// 获取默认可聚焦tab项
-function getDefaultFocusableTab(tabs, value) {
-  let selectedTab
-  let focusableTab
-
-  tabs.forEach((tab) => {
-    const isSelected = tab.props.value === value
-    if (isSelected) {
-      selectedTab = tab
-    }
-
-    if (!tab.isDisabled && !focusableTab) {
-      focusableTab = tab
-    }
-  })
-
-  if (selectedTab && !selectedTab.isDisabled) {
-    return selectedTab
-  }
-
-  return focusableTab
+  return { defaultValue, defaultFocusableValue, tabs }
 }
 
 export default function useTabList(props, option = {}) {
-  const tabs = getTabList(props)
-  const [value, setValue] = useState(getDefaultValue(tabs, props))
+  const rawListElement = useRef(null)
+  const { tabs, defaultValue, defaultFocusableValue } = getTabs(props)
+  const [selectedTabValue, setSelectedTabValue] = useState(defaultValue)
+  const isControlled = !isUndefined(props.value)
 
-  const tabListProps = getElementProps(props, option)
-  tabListProps.role = 'tablist'
+  useEffect(() => {
+    rawListElement.current = new RawListElementFactory('tab')
+  }, [])
+
+  // 受控模式下，值改变设置内部值
+  useEffect(() => {
+    if (isControlled) {
+      return
+    }
+    // value值改变之后获取当前选中值滚动到可视区域
+    nextTick(() => {
+      const selectedRawTabElement = rawListElement.current.getSelectedElement(option.ref.current)
+      selectedRawTabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+    })
+  }, [props.value])
+
+  // 触发值改变
+  const change = useCallback(
+    (value, tab) => {
+      if (!isControlled) {
+        setSelectedTabValue(value)
+      }
+
+      if (isFunction(props.onChange)) {
+        props.onChange(value)
+      }
+    },
+    [isControlled, props.onChange],
+  )
 
   // 激活tab
   function enterFocusingTab() {
-    const focusingElement = rawListElement.getFocusingElement(option.ref.current)
+    const focusingElement = rawListElement.current.getFocusingElement(option.ref.current)
     if (focusingElement) {
       focusingElement.click()
     }
   }
 
+  // focus前一个
   function focusingPrevTab() {
-    const prevRawTabElement = rawListElement.getPrevAvailableElement(option.ref.current)
+    const prevRawTabElement = rawListElement.current.getPrevAvailableElement(option.ref.current)
     if (prevRawTabElement) {
       prevRawTabElement.focus()
     }
   }
 
+  // focus下一个
   function focusingNextTab() {
-    const nextRawTabElement = rawListElement.getNextAvailableElement(option.ref.current)
+    const nextRawTabElement = rawListElement.current.getNextAvailableElement(option.ref.current)
     if (nextRawTabElement) {
       nextRawTabElement.focus()
     }
   }
 
+  const tabListProps = getElementProps(props, option)
+  tabListProps.role = 'tablist'
   // 监听相关快捷键事件
   tabListProps.onKeyDown = function (event) {
     if (isFunction(option.onKeyDown)) {
@@ -130,42 +130,24 @@ export default function useTabList(props, option = {}) {
     keyboardFactory(keyboards, { preventDefault: true })(event)
   }
 
-  function emitChange(value) {
-    if (isFunction(props.onChange)) {
-      props.onChange(value)
-    }
-  }
-
+  const currentSelectedTabValue = isControlled ? props.value : selectedTabValue
+  const selectedTab = tabs.find((tab) => tab.value === currentSelectedTabValue)
+  const defaultFocusableTab = tabs.find((tab) => tab.value === defaultFocusableValue)
   const tabListState = {
-    value,
     tabs,
-    // 是否受控模式
-    isControlled: isControlled(props),
-    // 默认可聚焦的tab项
-    defaultFocusableTab: getDefaultFocusableTab(tabs, value),
-    change(value) {
-      setValue(value)
-      emitChange(value)
-    },
-    emitChange,
+    selectedTab,
+    selectedTabValue: currentSelectedTabValue,
+    focusableTab: selectedTab.disabled ? defaultFocusableTab : selectedTab,
+    focusableTabValue: selectedTab.disabled ? defaultFocusableValue : selectedTab.value,
   }
 
-  // 受控模式下，值改变设置内部值
-  useEffect(() => {
-    if (isUndefined(props.value)) {
-      return
-    }
-    setValue(props.value)
-
-    // value值改变之后获取当前选中值滚动到可视区域
-    nextTick(() => {
-      const selectedRawTabElement = rawListElement.getSelectedElement(option.ref.current)
-      selectedRawTabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
-    })
-  }, [props.value])
+  const tabListOperator = {
+    change,
+  }
 
   return {
     tabListProps,
     tabListState,
+    tabListOperator,
   }
 }

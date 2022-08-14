@@ -1,6 +1,7 @@
 import React, { Children, cloneElement } from 'react'
 import classNames from 'classnames'
-import { isNumber, matchElement } from '@/packages/utils'
+import { isNumber } from '@/utils/is'
+import { matchElement } from '@/utils/element'
 
 import './Row.less'
 

@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react'
-import {
-  getElementProps,
-  keyboardFactory,
-  keyEnter,
-  keySpace,
-  isFunction,
-  scrollLeft,
-  scrollTop,
-} from '@/packages/utils'
+import { isFunction } from '@/utils/is'
+import { scrollLeft, scrollTop } from '@/utils/animate'
+import { keyEnter, keySpace, keyboardFactory } from '@/utils/keyboard'
+import { getElementProps } from '@/utils/element'
 
-export default function useScroll(props, tabListState, option = {}) {
+export default function useScroll(props, option = {}) {
   const { prevOption = {}, scrollOption = {}, nextOption = {} } = option
 
   const [isScroll, setScroll] = useState(false)
@@ -24,7 +19,7 @@ export default function useScroll(props, tabListState, option = {}) {
     }
 
     setScroll(isCurrentScroll)
-  }, [props.children])
+  }, [props.children, props.orientation])
 
   function scrollToPrev() {
     if (props.orientation === 'vertical') {

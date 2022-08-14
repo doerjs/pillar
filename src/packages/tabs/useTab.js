@@ -1,38 +1,33 @@
-import { getElementProps, isFunction } from '@/packages/utils'
+import { isFunction } from '@/utils/is'
+import { getElementProps } from '@/utils/element'
 
-export default function useTab(tab, tabListState, option = {}) {
-  const isSelected = tab.props.value === tabListState.value
+export default function useTab(tab, tabListState, tabListOperator, option = {}) {
+  const isSelected = tab.value === tabListState.selectedTabValue
+  const isDisabled = !!tab.disabled
 
   const tabProps = getElementProps({}, option)
   tabProps.role = 'tab'
 
-  tabProps.id = `tab-${tab.props.value}`
-  if (!tab.isDisabled) {
-    tabProps.tabIndex =
-      tabListState.defaultFocusableTab && tabListState.defaultFocusableTab.props.value === tab.props.value ? '0' : '-1'
+  tabProps.id = `tab-${tab.value}`
+  if (!isDisabled) {
+    tabProps.tabIndex = tabListState.focusableTabValue === tab.value ? '0' : '-1'
   }
 
   tabProps['aria-selected'] = isSelected
-  tabProps['aria-disabled'] = tab.isDisabled
-  tabProps['aria-controls'] = `tab-panel-${tab.props.value}`
+  tabProps['aria-disabled'] = isDisabled
+  tabProps['aria-controls'] = `tab-panel-${tab.value}`
 
   tabProps.onClick = function (event) {
     if (isFunction(option.onClick)) {
       option.onClick(event)
     }
 
-    if (tab.isDisabled) {
+    if (isDisabled) {
       return
     }
 
     event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
-
-    if (tabListState.isControlled) {
-      tabListState.emitChange(tab.props.value)
-      return
-    }
-
-    tabListState.change(tab.props.value)
+    tabListOperator.change(tab.value, tab)
   }
 
   tabProps.onFocus = function (event) {
@@ -48,7 +43,6 @@ export default function useTab(tab, tabListState, option = {}) {
       option.onBlur(event)
     }
 
-    event.preventDefault()
     event.currentTarget.removeAttribute('aria-focusing')
   }
 

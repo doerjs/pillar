@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import classNames from 'classnames'
-import { matchElement } from '@/packages/utils'
+import { matchElement } from '@/utils/element'
 
 import useTabList from './useTabList'
 import useTab from './useTab'
@@ -9,24 +9,22 @@ import useScroll from './useScroll'
 
 import './Tabs.less'
 
-function Tab({ state, tab }) {
-  const { tabProps } = useTab(tab, state)
-
+function Tab({ tab, state, operator }) {
+  const { tabProps } = useTab(tab, state, operator)
   return (
     <div className="pila-tabs_tab" {...tabProps}>
-      <div className="pila-tabs_title" title={tab.props.title}>
-        {tab.props.title}
+      <div className="pila-tabs_title" title={tab.title}>
+        {tab.title}
       </div>
     </div>
   )
 }
 
-function Panel({ state, tab }) {
-  const { panelProps } = usePanel(tab, state)
-
+function Panel({ tab, state, operator }) {
+  const { panelProps } = usePanel(tab, state, operator)
   return (
     <div className="pila-tabs_panel" {...panelProps}>
-      {tab.props.children}
+      {tab.children}
     </div>
   )
 }
@@ -43,8 +41,8 @@ function Panel({ state, tab }) {
  */
 export default function Tabs(props) {
   const tabListElement = useRef()
-  const { tabListProps, tabListState } = useTabList(props, { ref: tabListElement })
-  const { prevIndicatorProps, scrollProps, nextIndicatorProps } = useScroll(props, tabListState, {
+  const { tabListProps, tabListState, tabListOperator } = useTabList(props, { ref: tabListElement })
+  const { prevIndicatorProps, scrollProps, nextIndicatorProps } = useScroll(props, {
     scrollOption: { ref: tabListElement },
   })
 
@@ -65,7 +63,7 @@ export default function Tabs(props) {
         </div>
         <div className="pila-tabs_list" ref={tabListElement} {...{ ...scrollProps, ...tabListProps }}>
           {tabListState.tabs.map((tab) => (
-            <Tab key={tab.key} tab={tab} state={tabListState}></Tab>
+            <Tab key={tab.key} tab={tab} state={tabListState} operator={tabListOperator}></Tab>
           ))}
         </div>
         {action[0] && <div className="pila-tabs_action">{action[0]}</div>}
@@ -74,9 +72,7 @@ export default function Tabs(props) {
         </div>
       </div>
       <div className="pila-tabs_panels">
-        {tabListState.tabs.map((tab) => (
-          <Panel key={tab.key} tab={tab} state={tabListState}></Panel>
-        ))}
+        <Panel tab={tabListState.selectedTab} state={tabListState} operator={tabListOperator}></Panel>
       </div>
     </div>
   )
