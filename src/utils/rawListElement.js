@@ -47,10 +47,6 @@ RawListElementFactory.prototype.getFocusingElement = function (listElement = doc
   return listElement.querySelector(`[role=${this.role}][aria-focusing=true][aria-disabled=false]`)
 }
 
-RawListElementFactory.prototype.getDisabledElement = function (listElement = document.body) {
-  return listElement.querySelector(`[role=${this.role}][aria-disabled=true]`)
-}
-
 RawListElementFactory.prototype.getPrevAvailableElement = function (listElement = document.body) {
   const elements = this.getElements(listElement)
   if (!elements.length) {

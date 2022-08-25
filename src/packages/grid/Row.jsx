@@ -41,7 +41,7 @@ export default function Row({ id, className, gutter, children }) {
 
   return (
     <div id={id} className={classNames('pila-row', { [className]: !!className })}>
-      <div className="pila-row_content" style={style()}>
+      <div className="pila-row__content" style={style()}>
         {Children.map(col, (child) => {
           return cloneElement(child, { gutterX: gutterXY.x })
         })}

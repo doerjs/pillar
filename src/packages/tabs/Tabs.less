@@ -6,26 +6,26 @@
     flex-direction: row;
 
     .pila-tabs {
-      &_wrapper {
+      &__wrapper {
         flex-direction: column;
         width: @tab-vertical-header-width;
         height: auto;
         padding: @tab-padding-y 0;
       }
 
-      &_list {
+      &__list {
         flex-direction: column;
         width:100%;
       }
 
-      &_action {
+      &__action {
         margin: (@tab-padding-y / 2) 0;
         padding: 0 (@tab-padding-x / 2);
         flex-direction: column;
         width: 100%;
       }
 
-      &_tab {
+      &__tab {
         height: @tab-vertical-header-height;
 
         &[aria-selected=true] {
@@ -40,30 +40,30 @@
         }
       }
 
-      &_prev,
-      &_next {
+      &__prev,
+      &__next {
         left: 0;
         height: @tab-padding-x;
         width: 100%;
       }
 
-      &_prev {
+      &__prev {
         top: 0;
       }
 
-      &_next {
+      &__next {
         top: unset;
         bottom: 0;
       }
 
-      &_left {
+      &__left {
         &::before {
           transform: rotate(-45deg);
           margin: 4px 0 0 0;
         }
       }
 
-      &_right {
+      &__right {
         &::before {
           transform: rotate(135deg);
           margin: 0 0 4px 0;
@@ -109,7 +109,7 @@
   flex-direction: column;
   height: 100%;
 
-  &_wrapper {
+  &__wrapper {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -122,7 +122,7 @@
     flex: 0 0 auto;
   }
 
-  &_list {
+  &__list {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -133,7 +133,7 @@
     box-sizing: border-box;
   }
 
-  &_action {
+  &__action {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -143,12 +143,12 @@
     box-sizing: border-box;
   }
 
-  &_panels {
+  &__panels {
     flex: 1 1 auto;
   }
 
-  &_next,
-  &_prev {
+  &__next,
+  &__prev {
     position: absolute;
     top: 0;
     width: @tab-padding-x;
@@ -157,16 +157,16 @@
     box-sizing: border-box;
   }
 
-  &_prev {
+  &__prev {
     left: 0;
   }
 
-  &_next {
+  &__next {
     right: 0;
   }
 
-  &_left,
-  &_right {
+  &__left,
+  &__right {
     width: 100%;
     height: 100%;
     display: flex;
@@ -199,21 +199,21 @@
     .focus-visible();
   }
 
-  &_left {
+  &__left {
     &::before {
       transform: rotate(-135deg);
       margin: 0 0 0 4px;
     }
   }
 
-  &_right {
+  &__right {
     &::before {
       transform: rotate(45deg);
       margin: 0 4px 0 0;;
     }
   }
 
-  &_tab {
+  &__tab {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -232,13 +232,13 @@
     .tab-disabled();
   }
 
-  &_title {
+  &__title {
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  &_panel {
+  &__panel {
     &[aria-hidden=true] {
       display: none;
     }

@@ -55,9 +55,9 @@ export default function Col({ id, className, gutterX, span = 6, offset = 0, xs, 
 
   function addOffsetClassName(spec, specName) {
     if (isNumber(spec) && isValidSize(spec)) {
-      colClassName[`pila-col-${formatSize(spec)}_offset${specName ? '--' + specName : ''}`] = true
+      colClassName[`pila-col-${formatSize(spec)}__offset${specName ? '--' + specName : ''}`] = true
     } else if (isObject(spec) && isNumber(spec.offset) && isValidSize(spec.offset)) {
-      colClassName[`pila-col-${formatSize(spec.offset)}_offset${specName ? '--' + specName : ''}`] = true
+      colClassName[`pila-col-${formatSize(spec.offset)}__offset${specName ? '--' + specName : ''}`] = true
     }
   }
 
@@ -95,7 +95,7 @@ export default function Col({ id, className, gutterX, span = 6, offset = 0, xs, 
 
   return (
     <div id={id} className={classNames('pila-col', colClassName)} style={style()}>
-      <div className="pila-col_content">{children}</div>
+      <div className="pila-col__content">{children}</div>
     </div>
   )
 }

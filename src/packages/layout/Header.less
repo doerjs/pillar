@@ -3,7 +3,7 @@
 .has-desc() {
   &--has-desc {
     .pila-header {
-      &_head {
+      &__head {
         padding: @layout-padding-y @layout-padding-x 0;
       }
     }
@@ -14,7 +14,7 @@
   position: relative;
   background: white;
 
-  &_head {
+  &__head {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,21 +23,21 @@
     box-sizing: border-box;
   }
 
-  &_desc {
+  &__desc {
     font-size: @help-font-size;
     padding: (@layout-padding-y / 2) @layout-padding-x @layout-padding-y;
     color: @help-color;
     box-sizing: border-box;
   }
 
-  &_title {
+  &__title {
     display: flex;
     flex-direction: row;
     gap: (@layout-padding-y / 2) (@layout-padding-x / 2);
     align-items: center;
   }
 
-  &_label {
+  &__label {
     font-weight: 400;
     font-size: @layout-header-font-size;
     overflow: hidden;
@@ -45,7 +45,7 @@
     text-overflow: ellipsis;
   }
 
-  &_action {
+  &__action {
     display: flex;
     flex-direction: row;
     gap: (@layout-padding-y / 2) (@layout-padding-x / 2);

@@ -1,6 +1,6 @@
 import React from 'react'
 import Action from '@/packages/action'
-import { Layout, Header, Footer, Side, Section } from '@/packages/layout'
+import Layout, { Header, Footer, Side, Section } from '@/packages/layout'
 
 import styles from './Layout.module.less'
 

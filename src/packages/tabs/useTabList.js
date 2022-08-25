@@ -5,6 +5,10 @@ import { getElementProps, isMatchElement } from '@/utils/element'
 import { RawListElementFactory } from '@/utils/rawListElement'
 import { keyLeft, keyRight, keyUp, keyDown, keyEnter, keySpace, keyboardFactory } from '@/utils/keyboard'
 
+function isTabExist(value, tabs) {
+  return tabs.some((tab) => tab.value === value)
+}
+
 function getTab(element) {
   return {
     ...element.props,
@@ -16,7 +20,7 @@ function getTab(element) {
 // 获取tabs的默认值
 function getDefaultValue(props, tabs) {
   let defaultValue = props.defaultValue
-  if (isUndefined(props.defaultValue) && tabs.length) {
+  if (!isTabExist(defaultValue, tabs) && tabs.length) {
     const firstAvailableTab = tabs.find((tab) => !tab.disabled) || tabs[0] || {}
     defaultValue = firstAvailableTab.value
   }
@@ -130,7 +134,7 @@ export default function useTabList(props, option = {}) {
     keyboardFactory(keyboards, { preventDefault: true })(event)
   }
 
-  const currentSelectedTabValue = isControlled ? props.value : selectedTabValue
+  const currentSelectedTabValue = isTabExist(props.value, tabs) ? props.value : selectedTabValue
   const selectedTab = tabs.find((tab) => tab.value === currentSelectedTabValue)
   const defaultFocusableTab = tabs.find((tab) => tab.value === defaultFocusableValue)
   const tabListState = {

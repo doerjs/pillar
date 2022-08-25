@@ -12,8 +12,8 @@ import './Tabs.less'
 function Tab({ tab, state, operator }) {
   const { tabProps } = useTab(tab, state, operator)
   return (
-    <div className="pila-tabs_tab" {...tabProps}>
-      <div className="pila-tabs_title" title={tab.title}>
+    <div className="pila-tabs__tab" {...tabProps}>
+      <div className="pila-tabs__title" title={tab.title}>
         {tab.title}
       </div>
     </div>
@@ -23,7 +23,7 @@ function Tab({ tab, state, operator }) {
 function Panel({ tab, state, operator }) {
   const { panelProps } = usePanel(tab, state, operator)
   return (
-    <div className="pila-tabs_panel" {...panelProps}>
+    <div className="pila-tabs__panel" {...panelProps}>
       {tab.children}
     </div>
   )
@@ -34,6 +34,7 @@ function Panel({ tab, state, operator }) {
  * @property {String} className
  * @property {String} orientation 排版模式 horizontal(水平) ｜ vertical(垂直)
  * @property {Boolean} disabled
+ * @property {Boolean} destroyInHided 隐藏时销毁TabPanel
  * @property {String | Number} value 选中的项
  * @property {String | Number} defaultValue 默认选中的项
  * @property {key => void} onChange
@@ -57,23 +58,31 @@ export default function Tabs(props) {
         'pila-tabs--horizontal': props.orientation === 'horizontal',
       })}
     >
-      <div className="pila-tabs_wrapper">
-        <div className="pila-tabs_prev">
-          <div className="pila-tabs_left" {...prevIndicatorProps}></div>
+      <div className="pila-tabs__wrapper">
+        <div className="pila-tabs__prev">
+          <div className="pila-tabs__left" {...prevIndicatorProps}></div>
         </div>
-        <div className="pila-tabs_list" ref={tabListElement} {...{ ...scrollProps, ...tabListProps }}>
+        <div className="pila-tabs__list" ref={tabListElement} {...{ ...scrollProps, ...tabListProps }}>
           {tabListState.tabs.map((tab) => (
             <Tab key={tab.key} tab={tab} state={tabListState} operator={tabListOperator}></Tab>
           ))}
         </div>
-        {action[0] && <div className="pila-tabs_action">{action[0]}</div>}
-        <div className="pila-tabs_next">
-          <div className="pila-tabs_right" {...nextIndicatorProps}></div>
+        {action[0] && <div className="pila-tabs__action">{action[0]}</div>}
+        <div className="pila-tabs__next">
+          <div className="pila-tabs__right" {...nextIndicatorProps}></div>
         </div>
       </div>
-      <div className="pila-tabs_panels">
-        <Panel tab={tabListState.selectedTab} state={tabListState} operator={tabListOperator}></Panel>
-      </div>
+      {props.destroyInHided ? (
+        <div className="pila-tabs__panels">
+          <Panel tab={tabListState.selectedTab} state={tabListState} operator={tabListOperator}></Panel>
+        </div>
+      ) : (
+        <div className="pila-tabs__panels">
+          {tabListState.tabs.map((tab) => (
+            <Panel key={tab.key} tab={tab} state={tabListState} operator={tabListOperator}></Panel>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

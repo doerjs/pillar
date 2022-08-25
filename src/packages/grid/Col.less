@@ -22,7 +22,7 @@
 
 .offset-size(@i) when (@i <= 24) {
   .pila-col {
-    &-@{i}_offset {
+    &-@{i}__offset {
       margin-left: (@i / 24) * 100%;
     }
   }
@@ -32,7 +32,7 @@
 
 .response-offset-size(@i; @specName) when (@i <= 24) {
   .pila-col {
-    &-@{i}_offset--@{specName} {
+    &-@{i}__offset--@{specName} {
       margin-left: (@i / 24) * 100%;
     }
   }

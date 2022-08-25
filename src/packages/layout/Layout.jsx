@@ -38,10 +38,10 @@ export default function Layout({ id, className, mode, children }) {
     }
 
     return (
-      <div className="pila-layout_content">
-        {leftElement && <div className="pila-layout_left">{leftElement}</div>}
-        <main className="pila-layout_main">{main}</main>
-        {rightElement && <div className="pila-layout_right">{rightElement}</div>}
+      <div className="pila-layout__content">
+        {leftElement && <div className="pila-layout__left">{leftElement}</div>}
+        <main className="pila-layout__main">{main}</main>
+        {rightElement && <div className="pila-layout__right">{rightElement}</div>}
       </div>
     )
   }
@@ -51,10 +51,10 @@ export default function Layout({ id, className, mode, children }) {
     const footerElement = footer[0]
 
     return (
-      <div className="pila-layout_container">
-        {headerElement && <div className="pila-layout_header">{headerElement}</div>}
+      <div className="pila-layout__container">
+        {headerElement && <div className="pila-layout__header">{headerElement}</div>}
         {renderContent()}
-        {footerElement && <div className="pila-layout_footer">{footerElement}</div>}
+        {footerElement && <div className="pila-layout__footer">{footerElement}</div>}
       </div>
     )
   }

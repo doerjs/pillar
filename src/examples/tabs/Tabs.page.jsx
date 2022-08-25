@@ -10,16 +10,16 @@ function Content({ title }) {
 }
 
 export default function LayoutDemo() {
-  const [activeTab, setActiveTab] = useState('tab2')
+  const [activeTab, setActiveTab] = useState('tab5')
 
   return (
     <div className={styles.tab}>
       <div className={styles.item}>
         <Tabs
-          defaultValue={activeTab}
+          value={activeTab}
           onChange={(value) => {
             console.log('changed', value)
-            setActiveTab('tab6')
+            setActiveTab(value)
           }}
         >
           <Panel value="tab1" disabled title="tab1">
@@ -78,10 +78,10 @@ export default function LayoutDemo() {
       <div className={styles.item}>
         <Tabs
           orientation="vertical"
-          defaultValue={activeTab}
+          defaultValue="tab2"
+          destroyInHided
           onChange={(value) => {
             console.log('changed', value)
-            setActiveTab('tab20')
           }}
         >
           <Panel value="tab1" disabled title="tab1">

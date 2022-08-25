@@ -27,15 +27,15 @@ export default function Header({ id, className, title, desc, extra, children }) 
       })}
     >
       {isHeadVisible && (
-        <div className="pila-header_head">
-          <div className="pila-header_title">
-            <div className="pila-header_label">{title}</div>
-            <div className="pila-header_extra">{extra}</div>
+        <div className="pila-header__head">
+          <div className="pila-header__title">
+            <div className="pila-header__label">{title}</div>
+            <div className="pila-header__extra">{extra}</div>
           </div>
-          {action[0] && <div className="pila-header_action">{action[0]}</div>}
+          {action[0] && <div className="pila-header__action">{action[0]}</div>}
         </div>
       )}
-      {isDescVisible && <div className="pila-header_desc">{desc}</div>}
+      {isDescVisible && <div className="pila-header__desc">{desc}</div>}
       {other}
     </header>
   )
