@@ -2,11 +2,9 @@
   &--fixed-auto {
     height: 100%;
 
-    .pila-layout {
-      &__container {
-        height: 100%;
-      }
-      &__content {
+    > .pila-layout__container {
+      height: 100%;
+      > .pila-layout__content {
         height: 100%;
         overflow: auto;
       }
@@ -18,18 +16,14 @@
   &--fixed-fixed {
     height: 100%;
 
-    .pila-layout {
-      &__container {
-        height: 100%;
-      }
-    
-      &__content {
+    > .pila-layout__container {
+      height: 100%;
+      > .pila-layout__content {
         flex: 1 1 auto;
         height: 0;
-      }
-    
-      &__main {
-        overflow: auto;
+        > .pila-layout__main {
+          overflow: auto;
+        }
       }
     }
   }

@@ -23,10 +23,10 @@
   "devDependencies": {
     "@babel/runtime": "^7.16.7",
     "@babel/runtime-corejs3": "^7.16.7",
-    "@doerjs/cli": "0.0.5-alpha.6",
-    "@doerjs/eslint-config": "0.0.5-alpha.6",
-    "@doerjs/prettier-config": "0.0.5-alpha.6",
-    "@doerjs/plugin-less": "0.0.5-alpha.6",
+    "@doerjs/cli": "0.0.5-alpha.9",
+    "@doerjs/eslint-config": "0.0.5-alpha.9",
+    "@doerjs/prettier-config": "0.0.5-alpha.9",
+    "@doerjs/plugin-less": "0.0.5-alpha.9",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.5"
   }

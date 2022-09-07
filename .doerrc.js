@@ -14,13 +14,14 @@ module.exports = {
     './grid': '@/packages/grid',
     './tabs': '@/packages/tabs',
 
+    // style
+    './style': '@/packages/style',
+
     // utils
     './utils/is': '@/utils/is',
     './utils/enum': '@/utils/enum',
     './utils/tree': '@/utils/tree',
   },
   shared: {},
-  plugins: [
-    '@doerjs/plugin-less',
-  ],
+  plugins: ['@doerjs/plugin-less'],
 }
