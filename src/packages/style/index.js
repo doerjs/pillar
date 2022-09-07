@@ -1,2 +1,2 @@
 import './global.less'
-import '@/packages/icon'
+import './iconfont.less'
