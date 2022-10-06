@@ -2,7 +2,7 @@ import { Children } from 'react'
 import { isString } from './is'
 
 export function getAriaProps(props) {
-  const arias = ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-details']
+  const arias = ['id', 'aria-label', 'aria-labelledby', 'aria-describedby', 'aria-details']
 
   return arias.reduce((result, ariaKey) => {
     if (isString(props[ariaKey])) {

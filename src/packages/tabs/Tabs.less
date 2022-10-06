@@ -1,4 +1,4 @@
-@import '@/theme/variable.less';
+@import '@/theme/component.less';
 @import '@/theme/mixins.less';
 
 .vertical() {
@@ -15,12 +15,12 @@
 
       &__list {
         flex-direction: column;
-        width:100%;
+        width: 100%;
       }
 
       &__action {
-        margin: (@tab-padding-y / 2) 0;
-        padding: 0 (@tab-padding-x / 2);
+        margin: @tab-margin-y 0;
+        padding: 0 @tab-padding-x;
         flex-direction: column;
         width: 100%;
       }
@@ -34,7 +34,7 @@
             bottom: unset;
             right: 0;
             top: 0;
-            width: 2px;
+            width: @tab-selected-size;
             height: 100%;
           }
         }
@@ -43,7 +43,7 @@
       &__prev,
       &__next {
         left: 0;
-        height: @tab-padding-x;
+        height: @tab-toggle-size;
         width: 100%;
       }
 
@@ -59,14 +59,14 @@
       &__left {
         &::before {
           transform: rotate(-45deg);
-          margin: 4px 0 0 0;
+          margin: (@tab-margin-y / 2) 0 0 0;
         }
       }
 
       &__right {
         &::before {
           transform: rotate(135deg);
-          margin: 0 0 4px 0;
+          margin: 0 0 (@tab-margin-y / 2) 0;
         }
       }
     }
@@ -75,7 +75,7 @@
 
 .tab-selected() {
   &[aria-selected=true] {
-    color: @content-color;
+    color: @tab-font-color;
 
     &::after {
       content: '';
@@ -84,14 +84,14 @@
       bottom: 0;
       display: inline-block;
       width: 100%;
-      height: 2px;
-      background: @content-color;
+      height: @tab-selected-size;
+      background: @tab-selected-background;
     }
 
     &[aria-disabled=true] {
-      color: @disabled-color;
+      color: @tab-disabled-color;
       &::after {
-        background: @disabled-color;
+        background: @tab-disabled-background-color;
       }
     }
   }
@@ -100,7 +100,7 @@
 .tab-disabled() {
   &[aria-disabled=true] {
     cursor: default;
-    color: @disabled-color;
+    color: @tab-disabled-color;
   }
 }
 
@@ -115,7 +115,7 @@
     flex-direction: row;
     align-items: center;
     overflow: hidden;
-    height: @tab-header-height + 4px;
+    height: @tab-header-height + (@tab-selected-size * 2);
     padding: 0 @tab-padding-x;
     box-sizing: border-box;
     background: @tab-header-background;
@@ -126,7 +126,7 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    gap: @tab-gap;
+    gap: @tab-gap-y @tab-gap-x;
     padding: 2px;
     overflow: hidden;
     flex: 1 1 auto;
@@ -138,8 +138,8 @@
     flex-direction: row;
     align-items: center;
     flex: 0 0 auto;
-    gap: (@tab-padding-y / 2) (@tab-padding-x / 2);
-    margin: 0 (@tab-padding-x / 2);
+    gap: @tab-gap-y @tab-gap-x;
+    margin: 0 @tab-margin-x;
     box-sizing: border-box;
   }
 
@@ -151,7 +151,7 @@
   &__prev {
     position: absolute;
     top: 0;
-    width: @tab-padding-x;
+    width: @tab-toggle-size;
     height: 100%;
     padding: 2px;
     box-sizing: border-box;
@@ -184,7 +184,7 @@
       display: inline-block;
       width: 6px;
       height: 6px;
-      border: 2px solid @content-color;
+      border: 2px solid @tab-toggle-border-color;
       border-color: @tab-title-color;
       border-left-width: 0;
       border-bottom-width: 0;
@@ -192,7 +192,7 @@
 
     &:hover {
       &::before {
-        border-color: @content-color;
+        border-color: @tab-toggle-border-color;
       }
     }
 
@@ -223,7 +223,7 @@
     box-sizing: border-box;
     color: @tab-title-color;
     cursor: pointer;
-    padding: 0 (@tab-padding-x / 2);
+    padding: 0 @tab-padding-x;
     box-sizing: border-box;
     flex: 0 0 auto;
 

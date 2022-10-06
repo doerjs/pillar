@@ -30,7 +30,6 @@ function Panel({ tab, state, operator }) {
 }
 
 /**
- * @property {String} id
  * @property {String} className
  * @property {String} orientation 排版模式 horizontal(水平) ｜ vertical(垂直)
  * @property {Boolean} disabled
@@ -51,7 +50,6 @@ export default function Tabs(props) {
 
   return (
     <div
-      id={props.id}
       className={classNames('pila-tabs', {
         [props.className]: !!props.className,
         'pila-tabs--vertical': props.orientation === 'vertical',

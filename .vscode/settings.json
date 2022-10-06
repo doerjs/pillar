@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["fastdom", "iconfont", "labelledby", "pila", "tablist", "tabpanel"],
+  "cSpell.words": ["describedby", "fastdom", "iconfont", "labelledby", "pila", "pressable", "tablist", "tabpanel"],
   "files.associations": {
     "*.js": "javascript",
     "*.jsx": "javascriptreact",

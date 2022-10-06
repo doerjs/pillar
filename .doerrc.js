@@ -13,6 +13,7 @@ module.exports = {
     './layout': '@/packages/layout',
     './grid': '@/packages/grid',
     './tabs': '@/packages/tabs',
+    './button': '@/packages/button',
 
     // style
     './style': '@/packages/style',

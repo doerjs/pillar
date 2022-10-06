@@ -18,12 +18,12 @@ export default function useTab(tab, tabListState, tabListOperator, option = {}) 
   tabProps['aria-controls'] = `tab-panel-${tab.value}`
 
   tabProps.onClick = function (event) {
-    if (isFunction(option.onClick)) {
-      option.onClick(event)
-    }
-
     if (isDisabled) {
       return
+    }
+
+    if (isFunction(option.onClick)) {
+      option.onClick(event)
     }
 
     event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })

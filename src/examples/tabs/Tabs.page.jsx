@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Tabs, { Panel } from '@/packages/tabs'
-import Action from '@/packages/action'
+import { Tabs, Panel } from '@/packages/tabs'
+import { Action } from '@/packages/action'
 
 import styles from './Tabs.module.less'
 

@@ -131,7 +131,7 @@ export default function useTabList(props, option = {}) {
       keyboards.push(keyRight(focusingNextTab))
     }
 
-    keyboardFactory(keyboards, { preventDefault: true })(event)
+    keyboardFactory(keyboards)(event)
   }
 
   const currentSelectedTabValue = isTabExist(props.value, tabs) ? props.value : selectedTabValue
