@@ -22,6 +22,7 @@ module.exports = {
     './utils/is': '@/utils/is',
     './utils/enum': '@/utils/enum',
     './utils/tree': '@/utils/tree',
+    './utils/tool': '@/utils/tool',
   },
   shared: {},
   plugins: ['@doerjs/plugin-less'],
